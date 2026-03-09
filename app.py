@@ -1,3 +1,4 @@
+# Aircraft Detection Web App - Updated for dependency fix
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
