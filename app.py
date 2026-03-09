@@ -4,6 +4,9 @@ from ultralytics import YOLO
 from PIL import Image
 import numpy as np
 
+# Increase PIL image size limit to prevent DecompressionBombError on large images
+Image.MAX_IMAGE_PIXELS = None
+
 # Set page config for a wider layout
 st.set_page_config(page_title="Aircraft Detection Web App", layout="wide")
 
@@ -41,7 +44,7 @@ if uploaded_file is not None:
         
         with col1:
              st.subheader("Original Image")
-             st.image(image, caption='Uploaded Image', use_column_width=True)
+             st.image(image, caption='Uploaded Image', use_container_width=True)
 
         if st.button("Detect Aircraft 🔍"):
             with st.spinner("Running Inference..."):
@@ -60,7 +63,7 @@ if uploaded_file is not None:
                 
                 with col2:
                     st.subheader("Detection Result")
-                    st.image(detected_image, caption='Detected Aircrafts', use_column_width=True)
+                    st.image(detected_image, caption='Detected Aircrafts', use_container_width=True)
                 
                 # Expandable Details
                 with st.expander("Show Detection Details 📊"):
