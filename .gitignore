@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+.streamlit/
+runs/
+Dataset/
+Dataset1/
+YOLO-Dataset/
+*.pt
+!Aircarft-Detection-YOLO.pt
+!yolov8n.pt
+!yolov8s.pt
+*.log
+.DS_Store
