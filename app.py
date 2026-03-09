@@ -1,8 +1,8 @@
-# Aircraft Detection Web App - Updated for dependency fix
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
 import numpy as np
+import gc
 
 # Increase PIL image size limit to prevent DecompressionBombError on large images
 Image.MAX_IMAGE_PIXELS = None
@@ -12,6 +12,15 @@ st.set_page_config(page_title="Aircraft Detection Web App", layout="wide")
 
 st.title("🛫 Aircraft Detection with YOLOv8 🛬")
 st.write("Upload an image of an aircraft, and the YOLOv8 model will detect and draw bounding boxes around it.")
+
+def resize_image(image, max_size=1280):
+    """Resizes the image if it exceeds max_size to save memory."""
+    w, h = image.size
+    if max(w, h) > max_size:
+        scale = max_size / max(w, h)
+        new_size = (int(w * scale), int(h * scale))
+        return image.resize(new_size, Image.LANCZOS)
+    return image
 
 # --- Model Loading ---
 @st.cache_resource()
@@ -36,8 +45,9 @@ uploaded_file = st.file_uploader("📥 Choose an image...", type=["jpg", "jpeg",
 
 if uploaded_file is not None:
     try:
-        # Load constraints
+        # Load and resize image to prevent OOM
         image = Image.open(uploaded_file).convert('RGB')
+        image = resize_image(image)
         
         # Display the uploaded image
         col1, col2 = st.columns(2)
