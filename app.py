@@ -88,6 +88,14 @@ if uploaded_file is not None:
                              st.write(f"- Detection {i+1}: Class: **{class_name}**, Confidence: **{confidence:.2f}**")
                      else:
                          st.write("No aircraft detected in this image.")
+                
+                # Cleanup to free memory
+                del results
+                del res
+                del res_plotted
+                del res_rgb
+                del detected_image
+                gc.collect()
                          
     except Exception as e:
         st.error(f"Error processing the image: {e}")
