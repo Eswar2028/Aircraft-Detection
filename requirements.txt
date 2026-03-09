@@ -1,5 +1,6 @@
+opencv-python-headless
 streamlit
 ultralytics
 Pillow
 numpy
-opencv-python-headless
+dill
